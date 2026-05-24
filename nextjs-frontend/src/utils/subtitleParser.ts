@@ -29,7 +29,7 @@ export function toSRT(subtitles: Subtitle[]): string {
 export function timeToSeconds(time: string): number {
   const [hms, ms] = time.split(',');
   const [h, m, s] = hms.split(':').map(Number);
-  return h * 3600 + m * 60 + s + ms / 1000;
+  return h * 3600 + m * 60 + s + Number(ms) / 1000;
 }
 
 export function secondsToTime(seconds: number): string {
