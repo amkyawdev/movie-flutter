@@ -51,7 +51,6 @@ export const metadata: Metadata = {
   
   // Theme color
   themeColor: '#667eea',
-  appleServiceWorker: '/service-worker.js',
 };
 
 export default function RootLayout({
