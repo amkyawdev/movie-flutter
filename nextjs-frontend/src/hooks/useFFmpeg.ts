@@ -54,7 +54,9 @@ export function useFFmpeg() {
 
     if (output) {
       const data = await ffmpeg.readFile(output);
-      return new Blob([data], { type: 'video/mp4' });
+      // Convert Uint8Array to ArrayBuffer for Blob
+      const uint8Array = data as unknown as Uint8Array;
+      return new Blob([uint8Array.buffer], { type: 'video/mp4' });
     }
 
     return null;
