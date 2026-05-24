@@ -1,0 +1,28 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y curl git unzip xz-utils zip libglu1-mesa wget clang build-essential ninja-build
+
+# Download Flutter SDK
+RUN wget -q https://storage.googleapis.com/flutter-internet/archives/flutter.tar.xz -O flutter.tar.xz && \
+    tar xf flutter.tar.xz -C /opt && \
+    rm flutter.tar.xz
+
+ENV PATH="/opt/flutter/bin:${PATH}"
+
+WORKDIR /workspace
+
+# Copy pubspec and get dependencies
+COPY pubspec.yaml ./
+RUN flutter config --no-analytics && \
+    flutter pub get
+
+COPY . .
+
+ENV FLUTTER_WEB=true
+
+EXPOSE 8080
+
+CMD ["flutter", "run", "-d", "chrome", "--web-port", "8080"]

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  nextjs-frontend:
+    build:
+      context: ./nextjs-frontend
+      dockerfile: ../Dockerfile.nextjs
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nextjs-frontend:/workspace
+      - /workspace/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+    working_dir: /workspace
+
+  flutter-web:
+    build:
+      context: ./flutter-app
+      dockerfile: ../Dockerfile.flutter
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./flutter-app:/workspace
+    environment:
+      - FLUTTER_ROOT=/workspace
+    command: flutter run -d chrome --web-port 8080
+    working_dir: /workspace
+
+networks:
+  default:
+    name: movie-flutter-network
