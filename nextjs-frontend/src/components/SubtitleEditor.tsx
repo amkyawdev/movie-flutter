@@ -104,7 +104,7 @@ export default function SubtitleEditor({ subtitles, onChange }: SubtitleEditorPr
                 value={sub.startTime}
                 onChange={e => handleUpdate(sub.id, 'startTime', e.target.value)}
               />
-              <span>--></span>
+              <span>{'-->'}</span>
               <input
                 type="text"
                 value={sub.endTime}
