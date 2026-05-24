@@ -2,10 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "flutter-web",
   
+  // Build, Install and Output commands
   "buildCommand": "flutter build web --release",
   "installCommand": "flutter pub get",
   "outputDirectory": "build/web",
-  
   "devCommand": "flutter run -d chrome",
   
   "routes": [
