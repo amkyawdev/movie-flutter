@@ -41,7 +41,7 @@ export async function processVideo(
 
     const args = [
       '-i', 'input.mp4',
-      '-vf', `subtitles=subtitles.srt:force_style='Fontname=${options.font || "Arial"},FontSize=${fontSize},PrimaryColour=&H${hexToASS(color)\\n}'`,
+      '-vf', `subtitles=subtitles.srt:force_style='Fontname=${options.font || "Arial"},FontSize=${fontSize},PrimaryColour=&H${hexToASS(fontColor)\\n}'`,
       '-c:a', 'copy',
       'output.mp4'
     ];
@@ -50,7 +50,7 @@ export async function processVideo(
 
     // Read output
     const data = await ffmpeg.readFile('output.mp4');
-    const outputUrl = URL.createObjectURL(new Blob([data], { type: 'video/mp4' }));
+    const outputUrl = URL.createObjectURL(new Blob([new Uint8Array(data as unknown as Uint8Array)], { type: "video/mp4" }));
 
     return { success: true, outputUrl };
   } catch (error) {
@@ -78,7 +78,7 @@ export async function extractAudio(
     await ffmpeg.writeFile('input.mp4', await fetchFile(videoFile));
     await ffmpeg.exec(['-i', 'input.mp4', '-vn', '-c:a', 'copy', 'output.aac']);
     const data = await ffmpeg.readFile('output.aac');
-    return new Blob([data], { type: 'audio/aac' });
+    return new Blob([new Uint8Array(data as unknown as Uint8Array)], { type: "audio/aac" });
   } catch {
     return null;
   }
